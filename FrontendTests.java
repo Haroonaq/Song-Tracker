@@ -15,7 +15,7 @@ public class FrontendTests {
    * @return True if all tests pass, False otherwise.
    */
   @Test
-  public void roleTest1() {
+  public void frontendTest1() {
     // Test Load File
     {
       Scanner sc = new Scanner("testFilepath\n");
@@ -43,7 +43,7 @@ public class FrontendTests {
    * @return True if all tests pass, False otherwise.
    */
   @Test
-  public void roleTest2() {
+  public void frontendTest2() {
     // Test Get Songs & Filter
 
     { // Test GET with 1 song out.
@@ -118,7 +118,7 @@ public class FrontendTests {
    * @return True if all tests pass, False otherwise.
    */
   @Test
-  public void roleTest3() {
+  public void frontendTest3() {
     // Test Display Top 5
 
     { // Test Display 5.
