@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
  * of your own Frontend role code this week.  Note the limitations described
  * below.
  */
-public interface Backend_Placeholder {
+public class Backend_Placeholder implements BackendInterface {
 
     // Presumably this placeholder is using a placeholder tree that is itself
     // not fully functional.
@@ -19,7 +20,7 @@ public interface Backend_Placeholder {
 
     // when this method is called, an extra song is added to this backend
     public void readData(String filename) throws IOException {
-	p.insert(new Song("DJ Got Us Fallin' In Love (feat. Pitbull)",
+	this.tree.insert(new Song("DJ Got Us Fallin' In Love (feat. Pitbull)",
 			  "Usher","atl hip hop",2010,120,86,66,-3,8));
     }
 
@@ -32,20 +33,20 @@ public interface Backend_Placeholder {
 	String highString = (char)('A'+high)+" string";
 	Song highSong = new Song(highString,highString,highString,
 				 high,high,high,high,high,high);
-	tree.setIteratorMin(lowSong);
-	tree.setIteratorMax(highSong);
-	return fivemost Recent();
+	this.tree.setIteratorMin(lowSong);
+	this.tree.setIteratorMax(highSong);
+	return fiveMost();
     }
 
     // filters are being completely ignored here, and the fiveMost
     // songs are really the five only
     public List<String> setFilter(Integer threshold) {
-	return fivemost Recent();
+	return fiveMost();
     }
     public List<String> fiveMost() {
 	List<String> titles = new ArrayList<>();
 	for(Song song : tree) {
-	    titles.add(song.getTitle())
+	    titles.add(song.getTitle());
 	}
 	return titles;
     }
