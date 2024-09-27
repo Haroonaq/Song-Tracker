@@ -11,7 +11,7 @@ public class BackendTests {
      * Tests cases where readData works and doesn't work
      */
     @Test
-    public void roleTest1(){
+    public void backendTest1(){
 
         String fileName = "roon"; // cannot read from this file because it isn't .csv
         IterableSortedCollection<Song> tree = new Tree_Placeholder();
@@ -54,7 +54,7 @@ public class BackendTests {
      * Tests cases where getRange works and doesn't work
      */
     @Test
-    public void roleTest2() {
+    public void backendTest2() {
 
         //case 1 where the method should not work
 
@@ -87,7 +87,7 @@ public class BackendTests {
      * Tests cases that check the functionality of the setFilter and fiveMost methods
      */
     @Test
-    public void roleTest3(){
+    public void backendTest3(){
 
         IterableSortedCollection<Song> tree = new Tree_Placeholder();
         BackendInterface end = new Backend(tree);
