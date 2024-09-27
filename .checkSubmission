@@ -7,7 +7,16 @@ if [[ ! -f groupAndRole.txt ]]; then
   exit 1
 fi
 
-ROLE=Backend
+if [[ $(grep -c backend groupAndRole.txt) == 1 ]]; then
+    ROLE=Backend
+else
+    if [[ $(grep -c frontend groupAndRole.txt) == 1 ]]; then
+	ROLE=Frontend
+    else
+	echo "Warning Submission Incomplete: unable to find role stored in groupAndRole.txt file"
+	exit 1;
+    fi
+fi
 ROLEFILE="${ROLE}.java"
 ROLEINTRF="${ROLE}Interface.java"
 
@@ -16,7 +25,7 @@ if [[ ! -f ${ROLEFILE} ]]; then
   exit 1
 fi
 
-if ! grep -Pzq "implements[^\{]{1,100}${ROLEINTRF%\.java} " ${ROLEFILE}; then
+if ! grep -Pzq "implements[^\{]{1,100}${ROLEINTRF%\.java}" ${ROLEFILE}; then
   echo "Warning Submission Incomplete: ${ROLEFILE} does not implement ${ROLEINTRF%\.java}, but should"
   exit 1
 fi
@@ -26,18 +35,8 @@ if ! javac -cp .:${JUNITPATH} ${ROLEFILE}; then
   exit 1
 fi
 
-if ! grep -Pzq "@(Parameterized)?Test[^\(]{1,15}(public)? void ${ROLE,,}Test1 " ${ROLEFILE}; then
-  echo "Warning Submission Incomplete: ${ROLEFILE} does not contain a JUnit test method called ${ROLE,,}Test1, but should"
-  exit 1
-fi
-
-if ! grep -Pzq "@(Parameterized)?Test[^\(]{1,15}(public)? void ${ROLE,,}Test2 " ${ROLEFILE}; then
-  echo "Warning Submission Incomplete: ${ROLEFILE} does not contain a JUnit test method called ${ROLE,,}Test2, but should"
-  exit 1
-fi
-
-if ! grep -Pzq "@(Parameterized)?Test[^\(]{1,15}(public)? void ${ROLE,,}Test3 " ${ROLEFILE}; then
-  echo "Warning Submission Incomplete: ${ROLEFILE} does not contain a JUnit test method called ${ROLE,,}Test3, but should"
+if [[ ! -f "${ROLE}Tests.java" ]]; then
+  echo "Warning Submission Incomplete: submission does not contain ${ROLE}Tests.java file, but this is where your tests should be implemented"
   exit 1
 fi
 
