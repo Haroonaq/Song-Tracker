@@ -184,7 +184,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
     }
 
     /**
-     * Test to see if integers with duplicates are sorted in the right order and if the
+     * Test to see if strings with duplicates are sorted in the right order and if the
      * list stops at the max value
      */
     @Test
