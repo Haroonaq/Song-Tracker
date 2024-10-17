@@ -140,54 +140,83 @@ public class Frontend implements FrontendInterface {
     }
   }
 
+
+  /**
+   * Private Helper method that accepts an integer input from the user in a safe manner,
+   * re-prompting the user for an input if necessary.
+   * 
+   * @param prompt The prompt to display to the user when retrieving value.
+   * @return The user's value.
+   */
+  private int getSafeIntegerValue(String prompt, String errorMessage) {
+    int userIn;
+    while (true) {
+
+      // Prompt the User for an input.
+      System.out.println(prompt);
+      System.out.print(">> ");
+
+      // Try and accept the user's input.
+      try {
+        userIn = this.in.nextInt();
+
+        // As Scanner.nextInt() doesn't progress the cursor to the next line, we call
+        // Scanner.nextLine().
+        this.in.nextLine();
+      } catch (InputMismatchException e) {
+
+        // If the user's input was not a valid integer,
+        // we print the appropriate error message.
+        System.out.println(errorMessage);
+
+        // And now we effectively go back to the beginning of the loop to re-prompt the user.
+        continue;
+      }
+
+      // If no errors occured when inputting the integer, we can safely exit the loop.
+      break;
+    }
+
+    // Finally returning the user's input.
+    return userIn;
+  }
+
+
   @Override
   public void getSongs() {
     System.out.println("iSongly GET SONGS");
+
+    // Main loop for handling user inputs and processing output.
     while (true) {
       try {
 
-        int minEnergy;
-        while (true) { // Separate loops for each value to ensure safe input.
-          System.out
-              .println("Please enter the MINIMUM amount of energy you would like to experience:");
-          System.out.print(">> ");
-          try {
-            minEnergy = this.in.nextInt();
-            this.in.nextLine();
-          } catch (InputMismatchException e) {
-            System.out.println("Invalid Value. Please try again.");
-            continue;
-          }
-          break;
-        }
+        // Calling this.getSafeIntegerValue to ensure safe input handling.
+        int minEnergy = this.getSafeIntegerValue(
+            "Please enter the MINIMUM amount of energy you would like to experience:",
+            "Invalid Integer Value. Please try again.");
 
-        int maxEnergy;
-        while (true) { // Separate loops for each value to ensure safe input.
-          System.out
-              .println("Please enter the MAXIMUM amount of energy you would like to experience:");
-          System.out.print(">> ");
-          try {
-            maxEnergy = this.in.nextInt();
-            this.in.nextLine();
-          } catch (InputMismatchException e) {
-            System.out.println("Invalid Value. Please try again.");
-            continue;
-          }
-          break;
-        }
+        int maxEnergy = this.getSafeIntegerValue(
+            "Please enter the MAXIMUM amount of energy you would like to experience:",
+            "Invalid Integer Value. Please try again.");
 
         // If Max is less than min, resets to accept min again.
         if (maxEnergy < minEnergy) {
           System.out
               .println("Maximum Energy cannot be less than the Minimum Energy. Please try again.");
+
+          // Go back to beginning and re-prompt user.
           continue;
         }
 
         this.displaySongTitles(this.backend.getRange(minEnergy, maxEnergy));
+
+        // We can now succesfully exit the loop.
         break;
 
       } catch (Exception e) {
         System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
+
+        // If an unexpected exception is encountered, we exit and go back to the main menu.
         break;
       }
     }
@@ -197,33 +226,19 @@ public class Frontend implements FrontendInterface {
   public void setFilter() {
 
     System.out.println("iSongly SET DANCEABILITY FILTER");
+    try {
 
-    while (true) {
+      // Calling this.getSafeIntegerValue to ensure safe input handling.
+      int danceabilityMin = this.getSafeIntegerValue(
+          "Please enter the MINIMUM Danceability you would like to experience:",
+          "Invalid Integer Value. Please try again.");
 
-      try {
+      this.displaySongTitles(this.backend.setFilter(danceabilityMin));
+      return; // Returning back to main menu.
 
-        int danceabilityMin;
-        while (true) {
-          System.out.println("Please enter the MINIMUM Danceability you would like to experience:");
-          System.out.print(">> ");
-          try {
-            danceabilityMin = this.in.nextInt();
-            this.in.nextLine();
-          } catch (InputMismatchException e) {
-            System.out.println("Invalid Value. Please try again.");
-            continue;
-          }
-          break;
-        }
-
-        this.displaySongTitles(this.backend.setFilter(danceabilityMin));
-        break;
-
-      } catch (Exception e) {
-        System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
-        break;
-      }
-
+    } catch (Exception e) {
+      System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
+      return; // Returning back to main menu.
     }
 
   }
