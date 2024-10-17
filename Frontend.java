@@ -85,10 +85,6 @@ public class Frontend implements FrontendInterface {
             continue;
         }
 
-      } catch (UnsupportedOperationException e) {
-        System.out.println(
-            "Required Operation [\"" + userInput + "\"] is Unimplemented. Try another Operation.");
-        continue;
       } catch (Exception e) {
         System.out.println("Unexpected Error Encountered. Try again.");
         continue;
