@@ -10,7 +10,14 @@ import java.util.List;
  */
 public class Frontend implements FrontendInterface {
 
+  /**
+   * Scanner Reference from which to accept the inputs from the user.
+   */
   private Scanner in;
+
+  /**
+   * Backend Implementation to use.
+   */
   private BackendInterface backend;
 
   /**
@@ -38,6 +45,27 @@ public class Frontend implements FrontendInterface {
     this.backend = backend;
   }
 
+  /**
+   * Main method for calling the relevant commands. Repeatedly gives the user an opportunity to
+   * issue new commands until they select Q to quit. Uses the scanner passed to the constructor to
+   * read user input. <br>
+   * </br>
+   * Valid commands are as follows:<br>
+   * </br>
+   * 
+   * - [L] Load a File <br>
+   * </br>
+   * - [G] Get Songs <br>
+   * </br>
+   * - [F] Set Filter <br>
+   * </br>
+   * - [D] Display Top 5 <br>
+   * </br>
+   * - [Q] Quit.
+   * 
+   * Inputs are also case-insensitive. i.e. 'q' / 'Q' mean Quit.
+   * 
+   */
   @Override
   public void runCommandLoop() {
 
@@ -95,6 +123,17 @@ public class Frontend implements FrontendInterface {
     System.out.println("Quitting iSongly...");
   }
 
+  /**
+   * Displays the menu of command options to the user. Giving the user the instructions of entering
+   * L, G, F, D, or Q (case insensitive) to load a file, get songs, set filter, display the top
+   * five, or quit respectively.
+   * 
+   * Displays the options in the following format: <br>
+   * </br>
+   * <code> [Q] Quit </code><br>
+   * </br>
+   * With the value in '[]' representing the key to press for the specified option.
+   */
   @Override
   public void displayMainMenu() {
     System.out.println("");
@@ -106,6 +145,18 @@ public class Frontend implements FrontendInterface {
     System.out.println("[Q] Quit");
   }
 
+
+  /**
+   * Provides text-based user interface for prompting the user to select the csv file that they
+   * would like to load, provides feedback about whether this is successful vs any errors are
+   * encountered. [L]oad Song File
+   *
+   * When the user enters a valid filename, the file with that name should be loaded. Uses the
+   * scanner passed to the constructor to read user input and the backend passed to the constructor
+   * to load the file provided by the user. If the backend indicates a problem with finding or
+   * reading the file by throwing an IOException, a message is displayed to the user, and they will
+   * be asked to enter a new filename.
+   */
   @Override
   public void loadFile() {
     System.out.println("iSongly LOAD SONG FILE");
@@ -182,6 +233,18 @@ public class Frontend implements FrontendInterface {
   }
 
 
+  /**
+   * Provides text-based user interface and error handling for retrieving a list of song titles that
+   * are sorted by Energy. The user should be given the opportunity to optionally specify a minimum
+   * and/or maximum Energy to limit the number of songs displayed to that range. [G]et Songs by
+   * Energy
+   * 
+   * If any error is detected with the user's input eg. Minimum Energy is greater than the Maximum
+   * Energy, then the user is prompted again.
+   * 
+   * If the user enters an invalid integer for one of the inputs, they are only re-prompted for one
+   * of those inputs, rather than having to re-enter the minimum again.
+   */
   @Override
   public void getSongs() {
     System.out.println("iSongly GET SONGS");
@@ -222,6 +285,17 @@ public class Frontend implements FrontendInterface {
     }
   }
 
+  /**
+   * Provides text-based user interface and error handling for setting a filter threshold. This and
+   * future requests to retrieve songs will will only return the titles of songs that are larger
+   * than the user specified Danceability. The user should also be able to clear any previously
+   * specified filters. [F]ilter Songs by Danceability
+   *
+   * When the user enters only a single number, that number should be used as the new filter
+   * threshold. Uses the scanner passed to the constructor to read user input and the backend passed
+   * to the constructor to set the filters provided by the user and retrieve songs that maths the
+   * filter criteria.
+   */
   @Override
   public void setFilter() {
 
@@ -243,6 +317,15 @@ public class Frontend implements FrontendInterface {
 
   }
 
+  /**
+   * Displays the titles of up to five of the most Recent songs within the previously set Energy
+   * range and larger than the specified Danceability. If there are no such songs, then this method
+   * should indicate that and recommend that the user change their current range or filter settings.
+   * [D]isplay five most Recent
+   *
+   * The user should not need to enter any input when running this command. Uses the backend passed
+   * to the constructor to retrieve the list of up to five songs.
+   */
   @Override
   public void displayTopFive() {
 
