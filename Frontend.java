@@ -69,12 +69,16 @@ public class Frontend implements FrontendInterface {
   @Override
   public void runCommandLoop() {
 
+    // Main loop when dealing with user input.
     while (true) { // Breaks out of loop when user enters [q] / [Q]
       displayMainMenu();
 
       System.out.print(">> ");
 
       String userInput = "";
+
+      // Try block to catch unexpected exceptions when accepting user input, and calling relevant
+      // methods.
       try {
 
         userInput = in.nextLine();
@@ -93,6 +97,7 @@ public class Frontend implements FrontendInterface {
         if (userInput.charAt(0) == 'Q')
           break; // Quitting
 
+        // Switch Block for calling relevant method.
         switch (userInput.charAt(0)) {
 
           case 'L':
@@ -118,7 +123,11 @@ public class Frontend implements FrontendInterface {
         }
 
       } catch (Exception e) {
+        // Unexpected Exception Encountered.
+
         System.out.println("Unexpected Error Encountered. Please try again.");
+
+        // Going back to beginning of main loop, to re-prompt user.
         continue;
       }
 
@@ -165,15 +174,19 @@ public class Frontend implements FrontendInterface {
   public void loadFile() {
     System.out.println("iSongly LOAD SONG FILE");
 
-    while (true) {
+    // Main Loop for dealing with user inputs.
+    while (true) { // Only repeats if the user's input is invalid.
 
+      // Prompting User.
       System.out.println("Please enter the filepath:");
       System.out.print(">> ");
 
-      String userIn = "";
+      String userIn;
 
       try {
+        // Accepting user input.
         userIn = this.in.nextLine();
+
         if (userIn == null || userIn.length() == 0) {
           // Filepath cannot be null or empty.
           System.out.println("Provided filepath is empty. Please try again.");
@@ -186,12 +199,17 @@ public class Frontend implements FrontendInterface {
         System.out.println("Load Successful!");
         break;
 
-      } catch (IOException e) {
+      } catch (IOException e) { // Thrown by Backend when reading data from the provided CSV File.
+        // Only Called if the provided file does not exist or could not be read.
+
+        // Displaying Error Message.
         System.out.println("Provided file could not be found or read. Please try again.");
 
         // Go back to beginning.
         continue;
-      } catch (Exception e) {
+      } catch (Exception e) { // Unexpected Exception was Encountered.
+
+        // Displaying Error Message.
         System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
 
         // Go back to main menu.
@@ -211,7 +229,8 @@ public class Frontend implements FrontendInterface {
    */
   private int getSafeIntegerValue(String prompt, String errorMessage) {
     int userIn;
-    while (true) {
+    // Main Loop for handling User inputs.
+    while (true) { // Only repeats if user's input is invalid.
 
       // Prompt the User for an input.
       System.out.println(prompt);
@@ -224,7 +243,7 @@ public class Frontend implements FrontendInterface {
         // As Scanner.nextInt() doesn't progress the cursor to the next line, we call
         // Scanner.nextLine().
         this.in.nextLine();
-      } catch (InputMismatchException e) {
+      } catch (InputMismatchException e) { // Thrown by nextInt if user's input is not an integer.
 
         // If the user's input was not a valid integer,
         // we print the appropriate error message.
@@ -260,7 +279,9 @@ public class Frontend implements FrontendInterface {
     System.out.println("iSongly GET SONGS");
 
     // Main loop for handling user inputs and processing output.
-    while (true) {
+    while (true) { // Only Repeats if the provided Inputs are invalid.
+      // eg. Min > Max
+
       try {
 
         // Calling this.getSafeIntegerValue to ensure safe input handling.
@@ -268,12 +289,15 @@ public class Frontend implements FrontendInterface {
             "Please enter the MINIMUM amount of energy you would like to experience:",
             "Provided Energy Value is an Invalid Number. We can only accept Whole Number inputs. Please try again.");
 
+        // Calling this.getSafeIntegerValue to ensure safe input handling.
         int maxEnergy = this.getSafeIntegerValue(
             "Please enter the MAXIMUM amount of energy you would like to experience:",
             "Provided Energy Value is an Invalid Number. We can only accept Whole Number inputs. Please try again.");
 
         // If Max is less than min, resets to accept min again.
         if (maxEnergy < minEnergy) {
+
+          // Error Message.
           System.out
               .println("Maximum Energy cannot be less than the Minimum Energy. Please try again.");
 
@@ -286,7 +310,9 @@ public class Frontend implements FrontendInterface {
         // We can now succesfully exit the loop.
         break;
 
-      } catch (Exception e) {
+      } catch (Exception e) { // Unexpected Exception was Encountered.
+
+        // Displaying Error Message.
         System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
 
         // If an unexpected exception is encountered, we exit and go back to the main menu.
@@ -309,6 +335,9 @@ public class Frontend implements FrontendInterface {
   @Override
   public void setFilter() {
 
+    // Note: We do not use a loop here as all invalid cases are ensured by getSafeIntegerValue, with
+    // no additional invalid inputs aside from that.
+
     System.out.println("iSongly SET DANCEABILITY FILTER");
     try {
 
@@ -320,8 +349,11 @@ public class Frontend implements FrontendInterface {
       this.displaySongTitles(this.backend.setFilter(danceabilityMin));
       return; // Returning back to main menu.
 
-    } catch (Exception e) {
+    } catch (Exception e) { // Unexpected Exception was encountered.
+
+      // Displaying Error Message.
       System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
+
       return; // Returning back to main menu.
     }
 
@@ -341,9 +373,17 @@ public class Frontend implements FrontendInterface {
 
     System.out.println("iSongly DISPLAY TOP 5");
     try {
+
       this.displaySongTitles(this.backend.fiveMost());
-    } catch (Exception e) {
+
+      return; // Returning back to main menu.
+
+    } catch (Exception e) { // Unexpected Exception Encountered.
+
+      // Displaying Error Message.
       System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
+
+      return; // Returning back to main menu.
     }
 
   }
