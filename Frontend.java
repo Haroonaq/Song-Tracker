@@ -81,10 +81,13 @@ public class Frontend implements FrontendInterface {
         System.out.println();
 
         if (userInput == null || userInput.length() == 0) {
-          System.out.println("Invalid input. Try again.");
+          // User did not input any value.
+          System.out.println(
+              "Provided Input is empty. Please input one of the specified options as a single character based on the character specified in '[]' beside each option.");
           continue;
         }
 
+        // Ensuring Case-insensitivity.
         userInput = userInput.toUpperCase();
 
         if (userInput.charAt(0) == 'Q')
@@ -109,12 +112,13 @@ public class Frontend implements FrontendInterface {
             continue;
 
           default:
-            System.out.println("Invalid input. Try again.");
+            System.out.println(
+                "Provided Input is not one of the provided options. Please input one of the specified options as a single character based on the character specified in '[]' beside each option.");
             continue;
         }
 
       } catch (Exception e) {
-        System.out.println("Unexpected Error Encountered. Try again.");
+        System.out.println("Unexpected Error Encountered. Please try again.");
         continue;
       }
 
@@ -172,7 +176,9 @@ public class Frontend implements FrontendInterface {
         userIn = this.in.nextLine();
         if (userIn == null || userIn.length() == 0) {
           // Filepath cannot be null or empty.
-          System.out.println("Invalid Filepath. Please try again.");
+          System.out.println("Provided filepath is empty. Please try again.");
+
+          // Go back to beginning.
           continue;
         }
 
@@ -182,9 +188,13 @@ public class Frontend implements FrontendInterface {
 
       } catch (IOException e) {
         System.out.println("Provided file could not be found or read. Please try again.");
+
+        // Go back to beginning.
         continue;
       } catch (Exception e) {
         System.out.println("Unexpected Exception encountered. Returning to Main Menu.");
+
+        // Go back to main menu.
         break;
       }
 
@@ -256,11 +266,11 @@ public class Frontend implements FrontendInterface {
         // Calling this.getSafeIntegerValue to ensure safe input handling.
         int minEnergy = this.getSafeIntegerValue(
             "Please enter the MINIMUM amount of energy you would like to experience:",
-            "Invalid Integer Value. Please try again.");
+            "Provided Energy Value is an Invalid Number. We can only accept Whole Number inputs. Please try again.");
 
         int maxEnergy = this.getSafeIntegerValue(
             "Please enter the MAXIMUM amount of energy you would like to experience:",
-            "Invalid Integer Value. Please try again.");
+            "Provided Energy Value is an Invalid Number. We can only accept Whole Number inputs. Please try again.");
 
         // If Max is less than min, resets to accept min again.
         if (maxEnergy < minEnergy) {
@@ -305,7 +315,7 @@ public class Frontend implements FrontendInterface {
       // Calling this.getSafeIntegerValue to ensure safe input handling.
       int danceabilityMin = this.getSafeIntegerValue(
           "Please enter the MINIMUM Danceability you would like to experience:",
-          "Invalid Integer Value. Please try again.");
+          "Provided Energy Value is an Invalid Number. We can only accept Whole Number inputs. Please try again.");
 
       this.displaySongTitles(this.backend.setFilter(danceabilityMin));
       return; // Returning back to main menu.
