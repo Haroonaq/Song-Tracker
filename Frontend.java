@@ -181,13 +181,13 @@ public class Frontend implements FrontendInterface {
       System.out.println("Please enter the filepath:");
       System.out.print(">> ");
 
-      String userIn;
+      String inputFilepath;
 
       try {
         // Accepting user input.
-        userIn = this.in.nextLine();
+        inputFilepath = this.in.nextLine();
 
-        if (userIn == null || userIn.length() == 0) {
+        if (inputFilepath == null || inputFilepath.length() == 0) {
           // Filepath cannot be null or empty.
           System.out.println("Provided filepath is empty. Please try again.");
 
@@ -195,7 +195,7 @@ public class Frontend implements FrontendInterface {
           continue;
         }
 
-        this.backend.readData(userIn.trim());
+        this.backend.readData(inputFilepath.trim());
         System.out.println("Load Successful!");
         break;
 
