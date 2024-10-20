@@ -160,7 +160,7 @@ private String[] splitCSV(String line) {
             }
         }
 
-        // Updating rangeSongs
+     
         this.rangeSongs = filteredSongs;
 
         // Sort filteredSongs by Energy
@@ -197,7 +197,7 @@ private String[] splitCSV(String line) {
     public List<String> setFilter(Integer threshold) {
         this.danceabilityThreshold = threshold;
 
-        //should return an empty list
+      
         if (this.rangeSongs == null || this.rangeSongs.isEmpty()) {
             return new ArrayList<>();
         }
@@ -213,7 +213,7 @@ private String[] splitCSV(String line) {
             }
         }
 
-        // Sort the filtered songs by Energy
+    
         Collections.sort(filteredSongs, Comparator.comparing(Song::getEnergy));
 
         // convert the sorted Song objects to a list of titles
@@ -242,7 +242,7 @@ private String[] splitCSV(String line) {
     public List<String> fiveMost() {
         List<String> result = new ArrayList<>();
 
-        // return empty list if there are no songs
+       
         if (this.rangeSongs == null || this.rangeSongs.isEmpty()) {
             return result;
         }
