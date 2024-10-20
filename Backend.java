@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Backend implements BackendInterface {
 
@@ -46,40 +47,77 @@ public class Backend implements BackendInterface {
      * @param filename is the name of the csv file to load data from
      * @throws IOException when there is trouble finding/reading file
      */
+
+
     @Override
-    public void readData(String filename) throws IOException {
-
-        try {
-            File data = new File(filename);
-            Scanner scnr = new Scanner(data);
-
-            if (scnr.hasNextLine()) {
-                scnr.nextLine();
-            }
-	    scnr.nextLine();
-
-            while (scnr.hasNextLine()) {
-                String lineData = scnr.nextLine();
-                String[] fields = splitCSV(lineData);
-
-                int year = Integer.parseInt(fields[3]);
-                int bpm = Integer.parseInt(fields[4]);
-                int energy = Integer.parseInt(fields[5]);
-                int danceability = Integer.parseInt(fields[6]);
-                int loudness = Integer.parseInt(fields[7]);
-                int liveness = Integer.parseInt(fields[8]);
-
-
-                Song song = new Song(fields[0], fields[1], fields[2], year, bpm,
-                        energy, danceability, loudness, liveness);
-
-                tree.insert(song);
-            }
-            scnr.close();
-        } catch (FileNotFoundException e) {
-            throw new IOException("Could not read file " + e.getMessage());
-        }
+public void readData(String filename) throws IOException {
+    // must have .csv in file
+    if (!filename.endsWith(".csv")) {
+        throw new IOException("Invalid file format");
     }
+
+    try {
+        File data = new File(filename);
+        Scanner scnr = new Scanner(data);
+
+        // Check if the file has content
+        if (!scnr.hasNextLine()) {
+            throw new IOException("CSV file is empty or improperly formatted.");
+        }
+
+        // read header line and split it
+        String lineData = scnr.nextLine();
+        String[] fields = splitCSV(lineData);
+
+        //get the index of each required field
+        int titleIndex = Arrays.asList(fields).indexOf("title");
+        int artistIndex = Arrays.asList(fields).indexOf("artist");
+        int genreIndex = Arrays.asList(fields).indexOf("top genre");
+        int yearIndex = Arrays.asList(fields).indexOf("year");
+        int bpmIndex = Arrays.asList(fields).indexOf("bpm");
+        int energyIndex = Arrays.asList(fields).indexOf("nrgy"); 
+        int danceabilityIndex = Arrays.asList(fields).indexOf("dnce");
+        int loudnessIndex = Arrays.asList(fields).indexOf("dB");
+        int livenessIndex = Arrays.asList(fields).indexOf("live");
+
+        // Make sure all required fields are there
+        if (titleIndex == -1 || artistIndex == -1 || genreIndex == -1 || yearIndex == -1 ||
+            bpmIndex == -1 || energyIndex == -1 || danceabilityIndex == -1 || 
+            loudnessIndex == -1 || livenessIndex == -1) {
+            throw new IOException("Missing one or more required fields in the file.");
+        }
+
+        // Read remaining lines of the file
+        while (scnr.hasNextLine()) {
+            lineData = scnr.nextLine();
+            String[] songFields = splitCSV(lineData);
+
+
+            // Get values from each index
+            String title = songFields[titleIndex];
+            String artist = songFields[artistIndex];
+            String genre = songFields[genreIndex];
+            int year = Integer.parseInt(songFields[yearIndex]);
+            int bpm = Integer.parseInt(songFields[bpmIndex]);
+            int energy = Integer.parseInt(songFields[energyIndex]);
+            int danceability = Integer.parseInt(songFields[danceabilityIndex]);
+            int loudness = Integer.parseInt(songFields[loudnessIndex]);
+            int liveness = Integer.parseInt(songFields[livenessIndex]);
+
+     
+            Song song = new Song(title, artist, genre, year, bpm, energy, danceability, loudness, liveness);
+            tree.insert(song);
+        }
+
+        
+        scnr.close();
+
+    } catch (FileNotFoundException e) {
+        throw new IOException("Could not read file: " + e.getMessage());
+    }
+}
+
+
     /**
     * A custom method to split CSV lines, accounting for commas inside quoted fields.
     */
