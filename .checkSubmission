@@ -2,12 +2,10 @@
 
 JUNITPATH="/libs/junit5.jar"
 
-<<<<<<< HEAD
 if [[ -f ${JUNITPATH} ]]; then
     cp ${JUNITPATH} ../
 fi
 
-<<<<<<< HEAD
 if [[ ! -f Makefile ]]; then
 	echo
 	echo "Submission Failed Check: no Makefile found"
