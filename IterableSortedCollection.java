@@ -4,8 +4,10 @@
  * SortedCollection interface), and that are also iterable.
  */
 public interface IterableSortedCollection<T extends Comparable<T>>
-<<<<<<< HEAD
+
                                     extends SortedCollection<T>, Iterable<T> {
+
+    extends SortedCollection<T>, Iterable<T> {
 
     public void setIteratorMin(Comparable<T> min); // null to clear min
     public void setIteratorMax(Comparable<T> max); // null to clear max

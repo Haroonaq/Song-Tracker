@@ -1,3 +1,7 @@
 You have been assigned to group P1.1222 for this first project.
+
 Your assigned role for this project is: backend developer.
+
+Your assigned role for this project is: frontend developer.
+
 You can find the introduction videos of your groupmates on piazza through the link: https://piazza.com/class/m0blwpii47r4sq/post/265
