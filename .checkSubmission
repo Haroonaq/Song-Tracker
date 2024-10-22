@@ -2,6 +2,7 @@
 
 JUNITPATH="/libs/junit5.jar"
 
+<<<<<<< HEAD
 if [[ -f ${JUNITPATH} ]]; then
     cp ${JUNITPATH} ../
 fi
@@ -38,5 +39,6 @@ if grep -Pv '//' App.java | grep -Pq "_Placeholder"; then
 fi
 
 echo
+
 echo "Submission Passed Basic Scan"
 exit 0
