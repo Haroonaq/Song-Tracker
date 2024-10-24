@@ -239,12 +239,12 @@ private String[] splitCSV(String line) {
     public List<String> setFilter(Integer threshold) {
         this.danceabilityThreshold = threshold;
 
-      
-        if (this.rangeSongs == null || this.rangeSongs.isEmpty()) {
+       
+	if (this.rangeSongs == null || this.rangeSongs.isEmpty()) {
             return new ArrayList<>();
         }
 
-        //list to store the filtered results
+	 //list to store the filtered results
         List<Song> filteredSongs = new ArrayList<>();
 
         for (Song song : this.rangeSongs) {

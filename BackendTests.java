@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class BackendTests {
 
@@ -121,4 +122,135 @@ public class BackendTests {
 
         Assertions.assertTrue(noSongs.isEmpty(), "fiveMost should return empty list");
     }
+
+     /**
+     * Method designed to test basic functionality of app, see's if it can load a file, read it
+     * and output desired songs
+     */
+    @Test
+    public void integrationTest1(){
+
+        //call the methods within the app
+        TextUITester tester = new TextUITester("L\nsongs.csv\nG\n98\n100\nQ\n");
+
+        //instantiate the tree and backend
+        IterableSortedCollection<Song> tree = new IterableRedBlackTree<Song>();
+        BackendInterface backend = new Backend(tree);
+
+        //instantiate the frontend
+        Frontend frontend = new Frontend(new Scanner(System.in), backend);
+
+        frontend.runCommandLoop();
+
+        String output = tester.checkOutput();
+        
+        //The file should load properly and get songs should run properly
+        //The songs in the get range include Hello but not Cake By The Ocean
+
+        Assertions.assertTrue(output.contains("Load Successful!"), "CSV file should be loaded successfully");
+        Assertions.assertTrue(output.contains("Available Songs"), "Filtered songs should be displayed");
+        Assertions.assertTrue(output.contains("Hello"), "The song Hello should be available");
+        Assertions.assertFalse(output.contains("Cake By The Ocean"), "Song does not meet the filter");
+
     }
+
+    /**
+     * Method designed to see if the get songs method correctly works with the set filter
+     * method to output the correct results
+     */
+    @Test
+    public void integrationTest2(){
+
+        //call the methods within the app
+        TextUITester tester = new TextUITester("L\nsongs.csv\nG\n96\n100\nF\n50\nQ\n");
+
+        //instantiate the tree and backend
+        IterableSortedCollection<Song> tree = new IterableRedBlackTree<Song>();
+        BackendInterface backend = new Backend(tree);
+
+        //instantiate the frontend
+        Frontend frontend = new Frontend(new Scanner(System.in), backend);
+
+        frontend.runCommandLoop();
+
+        String output = tester.checkOutput();
+	        
+        //These songs below meet both get range and set filters criteria
+        
+        Assertions.assertTrue(output.contains("Don't Stop the Party"), "The song Don't Stop the Party should be available");
+        Assertions.assertTrue(output.contains("Hello"), "The song Hello should be available");
+        Assertions.assertTrue(output.contains("Pom Poms"), "The song Pom Poms should be available");
+        
+        //Bad Liar does not meet the set filter criteria 
+        Assertions.assertFalse(output.contains("Bad Liar"), "Song does not meet the filter");
+
+    }
+
+
+    /**
+     * Method designed to see if the display five most recent songs method works after loading
+     * the file and getting a range of songs
+     */
+    @Test
+    public void integrationTest3(){
+
+        //call the methods within the app
+        TextUITester tester = new TextUITester("L\nsongs.csv\nG\n95\n100\nD\nQ\n");
+
+        //instantiate the tree and backend
+        IterableSortedCollection<Song> tree = new IterableRedBlackTree<Song>();
+        BackendInterface backend = new Backend(tree);
+
+        //instantiate the frontend
+        Frontend frontend = new Frontend(new Scanner(System.in), backend);
+
+        frontend.runCommandLoop();
+
+        String output = tester.checkOutput();
+        
+        //5 of the most recent songs should be displayed given the earlier get range criteria
+        Assertions.assertTrue(output.contains("Blown"), "The song Blown should be available");
+        Assertions.assertTrue(output.contains("Booty"), "The song Booty should be available");
+        Assertions.assertTrue(output.contains("She Looks So Perfect"), "The song She Looks So Perfect should be available");
+        Assertions.assertTrue(output.contains("How Ya Doin'?"), "The song How Ya Doin'? should be available");
+        Assertions.assertTrue(output.contains("Rock N Roll"), "The song Rock N Roll should be available");
+        
+        //This is not a recent song
+        Assertions.assertFalse(output.contains("Bad Liar"), "Not apart of the 5 most recent songs");
+        
+    }
+
+
+    /**
+     * Another Method designed to see if the get songs method correctly works with the set filter
+     * however the order in which these two methods are called are now different. Set filter is
+     * called before get songs and that should not affect the outcome
+     */
+    @Test
+    public void integrationTest4(){
+
+        //call the methods within the app
+        TextUITester tester = new TextUITester("L\nsongs.csv\nF\n95\nG\n0\n100\nQ\n");
+
+        //instantiate the tree and backend
+        IterableSortedCollection<Song> tree = new IterableRedBlackTree<Song>();
+        BackendInterface backend = new Backend(tree);
+
+        //instantiate the frontend
+        Frontend frontend = new Frontend(new Scanner(System.in), backend);
+
+        frontend.runCommandLoop();
+
+        String output = tester.checkOutput();
+
+        //Should contain three songs Bad Liar, Drip, and Anaconda
+        //The other songs though they meet the get songs criteria, they don't meet the set filter criteria
+
+        Assertions.assertTrue(output.contains("Bad Liar"), "The song Bad Liar should be available");
+        Assertions.assertTrue(output.contains("Drip"), "The song Drip should be available");
+        Assertions. assertTrue(output.contains("Anaconda"), "The song Pom Poms should be available");
+        Assertions.assertFalse(output.contains("Rock N Roll"), "Song is not in the set filter range");
+        Assertions.assertFalse(output.contains("Hello"), "Song is not in the set filter range");
+
+    }
+ }
