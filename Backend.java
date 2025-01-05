@@ -17,12 +17,6 @@ public class Backend implements BackendInterface {
 
     private Integer danceabilityThreshold;
 
-
-    //public Backend(IterableSortedCollection<Song> tree)
-    // Your constructor must have the signature above. All methods below must
-    // use the provided tree to store, sort, and iterate through songs. This
-    // will enable you to create some tests that use the placeholder tree, and
-    // others that make use of a working tree.
     public Backend(IterableSortedCollection<Song> tree) {
 
         this.tree = tree;

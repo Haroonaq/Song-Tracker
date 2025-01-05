@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Main entry point for running the CS400 Project 1: iSongly app.
+ * Main entry point for running the Song Tracker app
  */
 public class App {
     public static void main(String[] args) {
