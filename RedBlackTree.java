@@ -16,21 +16,21 @@ public class RedBlackTree <T extends Comparable<T>> extends BSTRotation<T> {
         newNode.isRed = true;
 
 
-        //if the tree is empty set the newNode as the root
+        //If the tree is empty set the newNode as the root
         if (root == null) {
             root = newNode;
         }
         else {
-            //use the insertHelper method to insert the node
+            //Use the insertHelper method to insert the node
             insertHelper(newNode, root);
         }
 
-        //if the new node is not the root, make sure the red property is satisfied
+        //If the new node is not the root, make sure the red property is satisfied
         if (newNode.getUp() != null) {
             ensureRedProperty(newNode);
         }
 
-        //the root is black after all insertions
+        //The root is black after all insertions
         if (this.root != null) {
             ((RBTNode<T>) this.root).isRed = false;
 
@@ -118,13 +118,13 @@ public class RedBlackTree <T extends Comparable<T>> extends BSTRotation<T> {
     @Test
     public void RedBlackTreeTest1(){
         RedBlackTree<Integer> RBTTester  = new RedBlackTree<>();
-        //insert root value in the tree which has to be colored black
+        //Insert root value in the tree which has to be colored black
         RBTTester.insert(10);
         RBTNode<Integer> rootRBT = (RBTNode<Integer>) (RBTTester.root);
 
         Assertions.assertEquals("10(b)", rootRBT.toString());
 
-        //insert child values in the tree which have to be colored red
+        //Insert child values in the tree which have to be colored red
         RBTTester.insert(5);
         RBTTester.insert(15);
 
@@ -148,7 +148,7 @@ public class RedBlackTree <T extends Comparable<T>> extends BSTRotation<T> {
     public void RedBlackTreeTest2(){
         RedBlackTree<String> RBTTester  = new RedBlackTree<>();
 
-        //insert values in the tree
+        //Insert values in the tree
         RBTTester.insert("L");
         RBTTester.insert("F");
         RBTTester.insert("T");
@@ -192,7 +192,7 @@ public class RedBlackTree <T extends Comparable<T>> extends BSTRotation<T> {
 
         RedBlackTree<Integer> RBTTester  = new RedBlackTree<>();
 
-        //insert values in the tree
+        //Insert values in the tree
         RBTTester.insert(10);
         RBTTester.insert(8);
         RBTTester.insert(12);

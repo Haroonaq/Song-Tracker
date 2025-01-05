@@ -32,7 +32,7 @@ public class FrontendTests {
       }
       sc.close();
 
-      // Can't check much else...
+
     }
   }
 
@@ -107,7 +107,7 @@ public class FrontendTests {
         Assertions.assertTrue(false, "Displaying Invalid Songs.");
     }
 
-    // Not much else to test...
+   
 
   }
 

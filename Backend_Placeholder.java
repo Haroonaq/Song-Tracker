@@ -18,13 +18,13 @@ public class Backend_Placeholder implements BackendInterface {
 	this.tree = tree;
     }
 
-    // when this method is called, an extra song is added to this backend
+    // When this method is called, an extra song is added to this backend
     public void readData(String filename) throws IOException {
 	this.tree.insert(new Song("DJ Got Us Fallin' In Love (feat. Pitbull)",
 			  "Usher","atl hip hop",2010,120,86,66,-3,8));
     }
 
-    // these filters should work on the limited list of hard-coded songs in tree
+    // These filters should work on the limited list of hard-coded songs in tree
     // but 
     public List<String> getRange(Integer low, Integer high) {
 	String lowString = (char)('A'+low)+" string";
@@ -38,7 +38,7 @@ public class Backend_Placeholder implements BackendInterface {
 	return fiveMost();
     }
 
-    // filters are being completely ignored here, and the fiveMost
+    // Filters are being completely ignored here, and the fiveMost
     // songs are really the five only
     public List<String> setFilter(Integer threshold) {
 	return fiveMost();

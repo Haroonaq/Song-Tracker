@@ -18,14 +18,14 @@ public class BinarySearchTree <T extends Comparable<T>> implements SortedCollect
      */
     protected void insertHelper(BSTNode<T> newNode, BSTNode<T> subtree) {
 
-        //if the subtree is null then the method does nothing
+        //If the subtree is null then the method does nothing
 
         if (subtree == null) {
             return;
         }
 
 
-        //if the new node is bigger or equal than subtree insert to the left
+        //If the new node is bigger or equal than subtree insert to the left
         if (newNode.getData().compareTo(subtree.getData()) >= 0) {
 
             if (subtree.getRight() == null) {
@@ -37,7 +37,7 @@ public class BinarySearchTree <T extends Comparable<T>> implements SortedCollect
 
         }
 
-        // if the new node is smaller than the subtree insert to the right
+        //If the new node is smaller than the subtree insert to the right
 
         if (newNode.getData().compareTo(subtree.getData()) < 0) {
 
@@ -68,7 +68,7 @@ public class BinarySearchTree <T extends Comparable<T>> implements SortedCollect
 
         BSTNode<T> newNode = new BSTNode<T>(data);
 
-        // insert data at root if root is null otherwise call the helper method to find
+        // Insert data at root if root is null otherwise call the helper method to find
         // a null value where data can be inserted
 
         if (root == null) {
@@ -136,7 +136,7 @@ public class BinarySearchTree <T extends Comparable<T>> implements SortedCollect
         if (currentNode == null) {
             return 0;
         }
-        //add one for every node in the BST to the size
+        //Add one for every node in the BST to the size
         return 1 + sizeHelper(currentNode.getLeft()) + sizeHelper(currentNode.getRight());
 
     }

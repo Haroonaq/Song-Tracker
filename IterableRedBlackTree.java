@@ -57,11 +57,11 @@ public class IterableRedBlackTree<T extends Comparable<T>>
      */
     protected static class RBTIterator<R> implements Iterator<R> {
 
-        // stores the start point (minimum) for the iterator
+        // Stores the start point (minimum) for the iterator
         Comparable<R> min = null;
-        // stores the stop point (maximum) for the iterator
+        // Stores the stop point (maximum) for the iterator
         Comparable<R> max = null;
-        // stores the stack that keeps track of the inorder traversal
+        // Stores the stack that keeps track of the inorder traversal
         Stack<BSTNode<R>> stack = null;
 
         /**
@@ -93,13 +93,13 @@ public class IterableRedBlackTree<T extends Comparable<T>>
                 return;
             }
 
-            //if the node has a smaller value than the min value
+            //If the node has a smaller value than the min value
             // then recursively call right subtree
             if(min != null && min.compareTo(node.data) > 0) {
                 buildStackHelper(node.getRight());
             }
 
-            //otherwise push node onto the stack and recursively call the left subtree
+            //Otherwise push node onto the stack and recursively call the left subtree
             else {
                 stack.push(node);
                 buildStackHelper(node.getLeft());
@@ -110,14 +110,14 @@ public class IterableRedBlackTree<T extends Comparable<T>>
          * Returns true if the iterator has another value to return, and false otherwise.
          */
         public boolean hasNext() {
-            //if stack is empty there isnt a next value to return
+            //If stack is empty there isnt a next value to return
            if(stack.isEmpty()){
                return false;
            }
 
             R nextValue = stack.peek().getData();
 
-           //if the max value is smaller than the next value in the list return false
+           //If the max value is smaller than the next value in the list return false
            if(max != null && max.compareTo(nextValue) < 0){
                return false;
            }
@@ -132,7 +132,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
          */
         public R next() {
 
-            //if there is no elements in the list then there in a NoSuchElementException error
+            //If there is no elements in the list then there in a NoSuchElementException error
             if(!hasNext()){
                 throw new NoSuchElementException("There is no element left in the list");
             }
@@ -140,7 +140,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
             BSTNode<R> currentNode = stack.pop();
             R currentValue = currentNode.getData();
 
-            //if currentNode has a right child then push leftmost nodes onto the stack
+            //If currentNode has a right child then push leftmost nodes onto the stack
             if (currentNode.getRight() != null) {
                 buildStackHelper(currentNode.getRight());
             }
@@ -160,7 +160,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
     @Test
     public void iteratorTest1(){
         IterableRedBlackTree<Integer> testRBT = new IterableRedBlackTree<>();
-        //insert values in the tree
+        //Insert values in the tree
         testRBT.insert(30);
         testRBT.insert(10);
         testRBT.insert(25);
@@ -170,13 +170,13 @@ public class IterableRedBlackTree<T extends Comparable<T>>
 
         //5 should not be in the list since it is less than 9
         testRBT.setIteratorMin(9);
-        //sorts the list
+        //Sorts the list
         Iterator<Integer> test = testRBT.iterator();
 
         int[] expected = {10, 15, 20, 25, 30};
         int i = 0;
 
-        //checks if the value in the expected array matches up correctly 
+        //Checks if the value in the expected array matches up correctly 
         while(test.hasNext()) {
             Assertions.assertEquals(expected[i], test.next());
             i++;
@@ -190,7 +190,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
     @Test
     public void iteratorTest2(){
         IterableRedBlackTree<String> testRBT = new IterableRedBlackTree<>();
-        //insert values in the tree
+        //Insert values in the tree
         testRBT.insert("c");
         testRBT.insert("c");
         testRBT.insert("z");
@@ -203,13 +203,13 @@ public class IterableRedBlackTree<T extends Comparable<T>>
         //"z" and "h" should not be in the list because they come after "g"
         //which is the max
         testRBT.setIteratorMax("g");
-        //sorts the list
+        //Sorts the list
         Iterator<String> test2 = testRBT.iterator();
 
         String[] expected = {"a", "a", "b", "c", "c", "d"};
         int i = 0;
 
-        //checks if the value in the expected array matches up correctly
+        //Checks if the value in the expected array matches up correctly
         while(test2.hasNext()){
             Assertions.assertEquals(expected[i], test2.next());
             i++;
@@ -224,7 +224,7 @@ public class IterableRedBlackTree<T extends Comparable<T>>
     @Test
     public void iteratorTest3(){
         IterableRedBlackTree<Integer> testRBT = new IterableRedBlackTree<>();
-        //insert values in the tree
+        //Insert values in the tree
         testRBT.insert(30);
         testRBT.insert(10);
         testRBT.insert(25);
@@ -236,13 +236,13 @@ public class IterableRedBlackTree<T extends Comparable<T>>
         //5 and the duplicates of 30 should not be in the list
         testRBT.setIteratorMin(9);
         testRBT.setIteratorMax(26);
-        //sorts the list
+        //Sorts the list
         Iterator<Integer> test3 = testRBT.iterator();
 
         int[] expected = {10, 10, 15, 25};
         int i = 0;
 
-        //checks if the value in the expected array matches up correctly
+        //Checks if the value in the expected array matches up correctly
         while(test3.hasNext()) {
             Assertions.assertEquals(expected[i], test3.next());
             i++;

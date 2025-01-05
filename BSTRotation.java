@@ -24,7 +24,7 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
         //LEFT ROTATION
         if(parent.getRight() == child) {
 
-            //the child's left child becomes the parent's right child
+            //The child's left child becomes the parent's right child
             parent.setRight(child.getLeft());
 
             if(child.getLeft() != null) {
@@ -50,7 +50,7 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
                 root = child;
             }
 
-            //adjust the child and parent references to their parents
+            //Adjust the child and parent references to their parents
             child.setUp(grandParentNode);
             parent.setUp(child);
 
@@ -59,7 +59,7 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
         //RIGHT ROTATION
         else if(parent.getLeft() == child) {
 
-            //the child's right child becomes the parent's left child
+            //The child's right child becomes the parent's left child
             parent.setLeft(child.getRight());
 
             if(child.getRight() != null) {
@@ -80,12 +80,12 @@ public class BSTRotation<T extends Comparable<T>> extends BinarySearchTree<T> {
                 }
             }
 
-            //update the root
+            //Update the root
             if (parent == root) {
                 root = child;
             }
 
-            //adjust the child and parent reference to their parents
+            //Adjust the child and parent reference to their parents
             child.setUp(grandParentNode);
             parent.setUp(child);
 

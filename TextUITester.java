@@ -117,7 +117,7 @@ public class TextUITester {
     System.setIn(new ByteArrayInputStream(programInput.getBytes()));
   }
 
-  // hide System.out by default to keep test output more clean and clear
+
   public TextUITester(String programInput) {
     this(programInput, true);
   }
